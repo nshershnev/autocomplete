@@ -151,7 +151,9 @@ function AutocompleteInput() {
 					name="search-input"
 					aria-label="Search"
 					maxLength={2048}
+					data-testid="search-input"
 					className="autocomplete__input"
+					placeholder="Search..."
 					value={searchInput}
 					ref={searchInputRef}
 					onFocus={() => setHint('')}
