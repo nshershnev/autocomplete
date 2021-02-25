@@ -39,8 +39,37 @@
 	margin-left: 10px;
 }
 
-.autocomplete__input {
+.autocomplete__input-wrapper {
+	position: relative;
+	width: 100%;
+}
+
+.autocomplete__hint-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+
+	height: 100%;
+
+	pointer-events: none;
+}
+
+.autocomplete__hint {
+	width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+
 	background-color: transparent;
+    border-color: transparent;
+	box-shadow: none;
+}
+
+.autocomplete__input, .autocomplete__hint {
+	background-color: transparent;
+	box-sizing: border-box;
+
 	border: none;
 	outline: none;
 
@@ -50,4 +79,9 @@
 	width: 100%;
 
 	padding: 0 5px;
+}
+
+.autocomplete__hint {
+	pointer-events: none;
+	color: rgba(0, 0, 0, 0.35);
 }

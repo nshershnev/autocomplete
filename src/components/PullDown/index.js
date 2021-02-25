@@ -16,6 +16,8 @@ function PullDown(props) {
 					suggestion={suggestion}
 					searchSource={props.searchSource}
 					onSuggestionClick={props.onSuggestionClick}
+					onMouseOutSuggestion={props.onMouseOutSuggestion}
+					onMouseOverSuggestion={props.onMouseOverSuggestion}
 				/>
 			))}
 		</ul>
@@ -26,6 +28,8 @@ PullDown.propTypes = {
 	searchSource: PropTypes.string,
 	suggestions: PropTypes.array,
 	onSuggestionClick: PropTypes.func,
+	onMouseOutSuggestion: PropTypes.func,
+    onMouseOverSuggestion: PropTypes.func,
 };
 
 export default PullDown;

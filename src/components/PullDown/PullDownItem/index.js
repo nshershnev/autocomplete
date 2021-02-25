@@ -16,7 +16,14 @@ function PullDownItem(props) {
     }, [props.searchSource, props.suggestion]);
 
     return (
-        <li id={props.pullDownId} className="pull-down-item" tabIndex="0" onClick={() => props.onSuggestionClick(props.suggestion)}>
+        <li
+            tabIndex="0"
+            id={props.pullDownId}
+            className="pull-down-item"
+            onMouseOut={() => props.onMouseOutSuggestion()}
+            onMouseOver={() => props.onMouseOverSuggestion(props.suggestion)}
+            onClick={() => props.onSuggestionClick(props.suggestion)}
+        >
             <span className="pull-down-item__search"></span>
             <span className="pull-down-item__name" dangerouslySetInnerHTML={{ __html: suggestion }}></span>
         </li>
@@ -27,6 +34,8 @@ PullDownItem.propTypes = {
     pullDownId: PropTypes.string,
     searchSource: PropTypes.string,
     suggestion: PropTypes.string,
+    onMouseOutSuggestion: PropTypes.func,
+    onMouseOverSuggestion: PropTypes.func,
     onSuggestionClick: PropTypes.func,
 };
 

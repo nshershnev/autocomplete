@@ -12,6 +12,7 @@ function AutocompleteInput() {
 	const [searchInput, setSearchInput] = useState('');
 	const [searchSource, setSearchSource] = useState('');
 	const [suggestions, setSuggestions] = useState([]);
+	const [hint, setHint] = useState('');
 	const [focusedSuggestionIndex, setFocusedSuggestionIndex] = useState(undefined);
 
 	const getWordForAutocomplete = (target, searchInput) => {
@@ -76,14 +77,21 @@ function AutocompleteInput() {
 
 	const handleSuggestionClick = (suggestionToApply) => {
 		setSearchInput(suggestionToApply);
+
+		setHint('');
 		hideSuggestions();
 		setFocusSearchInput();
 	};
+
+	const handleMouseOutSuggestion = () => setHint('');
+
+	const handleMouseOverSuggestion = (suggestion) => setHint(suggestion);
 
 	const handleEnterKeydown = useCallback((suggestions, focusedSuggestionIndex) => {
 		const suggestionToApply = get(suggestions, [focusedSuggestionIndex], '');
 		setSearchInput(suggestionToApply);
 
+		setHint('');
 		hideSuggestions();
 		setFocusSearchInput();
 	}, []);
@@ -129,26 +137,42 @@ function AutocompleteInput() {
 
 	useEffect(() => {
 		setFocusPullDownItem(focusedSuggestionIndex);
-	}, [focusedSuggestionIndex]);
+
+		const hint = get(suggestions, [focusedSuggestionIndex], '');
+		setHint(hint);
+	}, [focusedSuggestionIndex, suggestions]);
 
 	return (
 		<div className={`autocomplete ${suggestions.length > 0 ? 'autocomplete--expanded' : ''}`}>
 			<span className="autocomplete__search"></span>
-			<input
-				type="text"
-				name="search-input"
-				aria-label="Search"
-				maxLength={2048}
-				className="autocomplete__input"
-				value={searchInput}
-				ref={searchInputRef}
-				onChange={handleChange}
-			/>
+			<div className="autocomplete__input-wrapper">
+				<input
+					type="text"
+					name="search-input"
+					aria-label="Search"
+					maxLength={2048}
+					className="autocomplete__input"
+					value={searchInput}
+					ref={searchInputRef}
+					onFocus={() => setHint('')}
+					onChange={handleChange}
+				/>
+				<span className="autocomplete__hint-wrapper">
+					<input
+						readOnly
+						type="text"
+						value={hint}
+						className="autocomplete__hint"
+					/>
+				</span>
+			</div>
 			{suggestions.length > 0 && (
 				<PullDown
 					searchSource={searchSource}
 					suggestions={suggestions}
 					onSuggestionClick={handleSuggestionClick}
+					onMouseOutSuggestion={handleMouseOutSuggestion}
+					onMouseOverSuggestion={handleMouseOverSuggestion}
 				/>
 			)}
 		</div>
