@@ -1,0 +1,27 @@
+.pull-down-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    cursor: pointer;
+    outline: none;
+}
+
+.pull-down-item:hover, .pull-down-item:focus {
+    background-color: #eeeeee;
+}
+
+.pull-down-item__search {
+    background: url('../../../images/search-icon.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+
+	height: 24px;
+	width: 24px;
+
+	padding: 5px;
+}
+
+.pull-down-item__name {
+    padding-left: 5px;
+}

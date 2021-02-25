@@ -1,0 +1,36 @@
+.pull-down {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+
+    min-height: 46px;
+    max-height: 185px;
+    overflow-y: scroll;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    padding: 0 10px 10px 10px;
+    margin: 0;
+
+    background: #fff;
+
+    border-radius: 24px;
+    border: 0;
+    box-shadow: 0 4px 6px rgb(32 33 36 / 28%);
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    list-style-type: none;
+}
+
+.pull-down::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+.pull-down__separate-line {
+    border-top: 1px solid #e8eaed;
+    padding-bottom: 4px;
+}
