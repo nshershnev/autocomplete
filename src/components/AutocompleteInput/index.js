@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { get, isNumber } from 'lodash';
 import './styles.css';
 
@@ -116,16 +116,16 @@ function AutocompleteInput() {
 		}
 	}, []);
 
-	const handleKeydown = useCallback(({ keyCode }) => {
-		const keyDownCallbacks = {
-			[keyCode === KEY_CODES.ENTER]: () => handleEnterKeydown(suggestions, focusedSuggestionIndex),
-			[keyCode === KEY_CODES.ARROW_UP]: () => handleArrowUpKeydown(suggestions.length, focusedSuggestionIndex),
-			[keyCode === KEY_CODES.ARROW_DOWN]: () => handleArrowDownKeydown(suggestions.length, focusedSuggestionIndex),
-		};
+	const keyDownCallbacks = useMemo(() => ({
+		[KEY_CODES.ENTER]: (suggestions, focusedSuggestionIndex) => handleEnterKeydown(suggestions, focusedSuggestionIndex),
+		[KEY_CODES.ARROW_UP]: (suggestions, focusedSuggestionIndex) => handleArrowUpKeydown(suggestions.length, focusedSuggestionIndex),
+		[KEY_CODES.ARROW_DOWN]: (suggestions, focusedSuggestionIndex) => handleArrowDownKeydown(suggestions.length, focusedSuggestionIndex)
+	}), [handleEnterKeydown, handleArrowUpKeydown, handleArrowDownKeydown]);
 
-		const selectedHandler = keyDownCallbacks[true];
-		selectedHandler && selectedHandler();
-	}, [focusedSuggestionIndex, suggestions, handleEnterKeydown, handleArrowUpKeydown, handleArrowDownKeydown]);
+	const handleKeydown = useCallback(({ keyCode }) => {
+		const selectedHandler = keyDownCallbacks[keyCode];
+		selectedHandler && selectedHandler(suggestions, focusedSuggestionIndex);
+	}, [focusedSuggestionIndex, keyDownCallbacks, suggestions]);
 
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeydown);
